@@ -1,6 +1,8 @@
 body{
     margin: 0;
-    background-image: url("tenta2.jpg");
+    background-image: url('https://eskipaper.com/images/color-wallpaper-2.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .wrapper{
     display: flex;
