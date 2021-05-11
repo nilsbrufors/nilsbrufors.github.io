@@ -1,0 +1,93 @@
+body{
+    margin: 0;
+    background-image: url("tenta2.jpg");
+}
+.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+main{
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 1rem;
+    margin-top: 1rem;
+    
+    
+}
+main img{
+    width: 100%;
+    box-shadow: 4px 4px 8px #000000;
+}
+main img:hover{
+    transform: scale(1.0);
+    box-shadow:8px 8px 16px #000000;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+#overlay
+{
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color:black;
+    
+}
+#overlay.show{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+#overlay figure{
+    margin: 0;
+    padding: 0;
+    max-width: 50rem;
+
+}
+#overlay figure img{
+    width: 100%;
+}
+.input-field{
+    padding: 0.5rem;
+    border: 1px solid #dcdcdc;
+    display: flex;
+    align-self: center;
+    font-size: 16px;
+    margin: 1rem;
+   
+}
+#button{
+    display: flex;
+ 
+    justify-content: center;
+    padding: 1rem;
+    border: 1px solid #34495e;
+    background: black;
+    box-shadow: 1px 3px 4px #34495e94;
+    color: white;
+    transition: box-shadow 0.5;
+    outline: none;
+}
+#button:hover{
+    transform: scale(1.0);
+    box-shadow:8px 8px 16px #000000;
+    transition: 0.5s ease;
+    cursor: pointer;
+
+}
+#button.active{
+    box-shadow: black;
+}
+figure{
+    background: black;
+    color: white;
+    margin-top: 0;
+}
+
