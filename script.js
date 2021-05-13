@@ -1,19 +1,19 @@
-let currentPage = 1;
-let loadingImages = false;
+let currentPage = 0;
+let loadingImg = false;
 let refreshPage = false;
 let main = document.querySelector('main');
 
 document.querySelector('button').addEventListener('click', async () => {
-    let images = await getImages(); //json objekt returnerar
-    if(refreshPage === false){
-        updateUI(images);
+    let images = await getImg(); 
+    if(refreshPage === false){ 
+        updateUserInterface(images);
         refreshPage = true;
     }
     else if(refreshPage === true){
         while(main.firstChild){
             main.removeChild(main.lastChild)
         }
-        updateUI(images);
+        updateUserInterface(images);
         refreshPage = false;
     }
     });
@@ -23,7 +23,7 @@ document.querySelector('button').addEventListener('click', async () => {
 
 
 
-async function getImages(){
+async function getImg(){
     const apiKey = 'bb389f85a2b1ecabdffbc6c79aeccabd';
     let method = 'flickr.photos.search';
     let text = document.querySelector('input#text').value;
@@ -46,6 +46,7 @@ function imgUrl(img, size){
 
     let imgSize = 'z';
     if(size == 'thumb'){imgSize = 'q'}
+    
     if(size == 'large'){imgSize='b'}
 
     let url = `https://farm${img.farm}.staticflickr.com/${img.server}/${img.id}_${img.secret}_${imgSize}.jpg`;
@@ -53,9 +54,9 @@ function imgUrl(img, size){
     return url;
 }
 
-function updateUI(data){
+function updateUserInterface(data){
 
-    loadingImages = false;
+    loadingImg = false;
 
     data.photos.photo.forEach(img => {
 
@@ -86,24 +87,35 @@ function handleLightbox(title, url){
 
 }
 
-document.querySelector('#overlay').addEventListener('click', () => {
+document.querySelector('#overlay').addEventListener('click', () => { 
     document.querySelector('#overlay').classList.toggle('show');
 })
 
-//Infinite scroll
-window.addEventListener('scroll',()=>{
-    console.log(window.scrollY) //scrolled from top
-    console.log(window.innerHeight) //visible part of screen
-    if(window.scrollY + window.innerHeight >= 
-    document.documentElement.scrollHeight){
-    loadingImages = true;
-    currentPage++; 
-    nextPage();
-    }
+let lastKnownScrollPosition = 0;
+let ticking = false;
+function onscroll(){
+
+}
+document.addEventListener('scroll', function(e)
+{
+    lastKnownScrollPosition = window.scrollY;
+    if(!ticking && window.scrollY + window.innerHeight >=
+        document.documentElement.scrollHeight){
+            window.requestAnimationFrame(function() {
+                onscroll(lastKnownScrollPosition);
+                console.log("position: " + lastKnownScrollPosition);
+                currentPage++;
+                nextPage();
+                ticking= false;
+            });
+            ticking = true;
+        }
 })
 
+
+
 async function nextPage(){
-    let images = await getImages();
-    updateUI(images);
+    let images = await getImg();
+    updateUserInterface(images);
 }
 
